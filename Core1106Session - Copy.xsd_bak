@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!-- 
+ @<COPYRIGHT>@
+ ==================================================
+ Copyright 2012
+ Siemens Product Lifecycle Management Software Inc.
+ All Rights Reserved.
+ ==================================================
+ @<COPYRIGHT>@
+
+ ==================================================
+
+   Auto-generated source from service interface.
+                 DO NOT EDIT
+
+ ==================================================
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="http://teamcenter.com/Schemas/Core/2011-06/Session"
+    xmlns:tns="http://teamcenter.com/Schemas/Core/2011-06/Session" 
+    xmlns:soa="http://teamcenter.com/Schemas/Soa/2006-03/Base"
+     
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+    
+    <xsd:import namespace="http://teamcenter.com/Schemas/Soa/2006-03/Base"           schemaLocation="SoaBase.xsd" />
+    
+    
+
+    <xsd:complexType name="CacheTickets"> 
+        <xsd:annotation>
+                <xsd:appinfo>
+                     <xjb4c-hashmap>
+                          <key>key</key>
+                          <value>value</value>
+                     </xjb4c-hashmap>
+                </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+        </xsd:sequence>
+        <xsd:attribute name="key" type="xsd:string" use="required">
+       </xsd:attribute>
+        <xsd:attribute name="value" type="xsd:string" use="required">
+       </xsd:attribute>
+    </xsd:complexType> 
+
+
+    <xsd:complexType name="ServerInfo"> 
+        <xsd:annotation>
+                <xsd:appinfo>
+                     <xjb4c-hashmap>
+                          <key>key</key>
+                          <value>value</value>
+                     </xjb4c-hashmap>
+                </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+        </xsd:sequence>
+        <xsd:attribute name="key" type="xsd:string" use="required">
+       </xsd:attribute>
+        <xsd:attribute name="value" type="xsd:string" use="required">
+       </xsd:attribute>
+    </xsd:complexType> 
+
+
+
+    <xsd:element name="ClientCacheInfo">
+    <xsd:complexType>
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                Data for the requested cached features.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="features" type="tns:Feature"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        The list of  features.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="soa:PartialErrors" >
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        Errors are return for features that do not exist or if there are other errors in getting data for a given service. The client ID in the partial error will be that of the feature name.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    </xsd:element>
+
+
+    <xsd:complexType name="Credentials">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                The credentials needed to authenticate a user.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+        </xsd:sequence>
+        <xsd:attribute name="user" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The user's Teamcenter user name.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="password" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The user's Teamcenter password or SSO token.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="group" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The group ID for this session. If blank (""), the user's default group is assumed.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="role" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The role the user is performing in the group. If blank (""), the user's default role in the group is assumed.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="locale" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The locale to be used by the Teamcenter server process for this session. If blank (""), the server's default locale will be used.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="descrimator" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    Client defined identifier for this session. This argument is ignored when the client application is deployed in a 2Tier environment (IIOP communication).
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="Feature">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                Information for a single client cache feature.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="cacheTickets" type="tns:CacheTickets"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:appinfo>
+                        <xjb4c-type>hashmap</xjb4c-type>
+                    </xsd:appinfo>
+                    <xsd:documentation><![CDATA[
+                        A map of <b>Dataset</b> names and FMS tickets (string/string) for each <b>Dataset</b> that makes up the client cache feature.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    Name of the feature,  <i>ClientMetaModel</i> or <i>TextData</i>.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+    </xsd:complexType>
+
+
+    <xsd:element name="LoginResponse">
+    <xsd:complexType>
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                Basic information about the server and  partial errors are returned when the authentication is successful but requested <font face="courier" height="10">role</font> or <font face="courier" height="10">locale</font> is not supported.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="serverInfo" type="tns:ServerInfo"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:appinfo>
+                        <xjb4c-type>hashmap</xjb4c-type>
+                    </xsd:appinfo>
+                    <xsd:documentation><![CDATA[
+                        Name/Value pairs (string/string) of data related to the server. The following keys are valid:<br /><ul><ul><li type="disc"><i>Version</i>         The version of the Teamcenter server.</li><li type="disc"><i>HostName</i>     The name of the Teamcenter server's host machine.</li><li type="disc"><i>LogFile</i>         The full path of the Teamcenter server's log file.</li><li type="disc"><i>Locale</i>          The locale of this session.</li><li type="disc"><i>TcServerID</i>    The unique ID of this instance of the Teamcenter server.</li></ul></ul>
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="soa:PartialErrors" >
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        Partial errors or warnings resulting from the login attempt.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    </xsd:element>
+
+
+
+    <xsd:element name="GetClientCacheDataInput">
+    <xsd:complexType>
+        <xsd:sequence>
+            <xsd:element name="features" type="xsd:string"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        Names of features to return<i>, All</i> to return data for all features. Available features are <i>ClientMetaModel</i> and <i>TextData</i>.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    </xsd:element>
+    <!--  ClientCacheInfo is used as the getClientCacheData output element -->
+
+
+    <xsd:element name="GetTypeDescriptionsInput">
+    <xsd:complexType>
+        <xsd:sequence>
+            <xsd:element name="typeNames" type="xsd:string"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        List of Business Model Object type names.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    </xsd:element>
+    <!--  TypeSchema from the SoaBase.xsd is used as the getTypeDescriptions output element -->
+
+
+    <xsd:element name="LoginInput">
+    <xsd:complexType>
+        <xsd:sequence>
+            <xsd:element name="credentials" type="tns:Credentials" >
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        The user's Teamcenter credentials
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    </xsd:element>
+    <!--  LoginResponse is used as the login output element -->
+
+
+    <xsd:element name="LoginSSOInput">
+    <xsd:complexType>
+        <xsd:sequence>
+            <xsd:element name="credentials" type="tns:Credentials" >
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        The user's Teamcenter credentials.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    </xsd:element>
+    <!--  LoginResponse is used as the loginSSO output element -->
+
+
+    <xsd:element name="UpdateObjectPropertyPolicyInput">
+    <xsd:complexType>
+        <xsd:sequence>
+            <xsd:element name="addProperties" type="soa:PolicyType"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        List of properties to add to the named policy.  If the property already exists in the policy, the flags (i.e. <font face="courier" height="10">excludeUiValues</font>) from the input will take precedence over the flags on the existing property.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="removeProperties" type="soa:PolicyType"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        List of properties to remove from the named policy. If a source <font face="courier" height="10">PolicyType</font> defines a type without properties, the whole type is removed.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="policyID" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The ID of the policy to update. This is the ID that is returned from the <font face="courier" height="10">setObjectPropetyPolicy</font> operation.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+    </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="UpdateObjectPropertyPolicyOutput">
+    <xsd:complexType>
+        <xsd:sequence>
+        </xsd:sequence>
+        <xsd:attribute name="out" type="xsd:string" use="required">
+       </xsd:attribute>
+    </xsd:complexType>
+    </xsd:element>
+
+
+
+</xsd:schema>

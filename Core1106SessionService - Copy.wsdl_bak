@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<wsdl:definitions 
+    targetNamespace="http://teamcenter.com/Services/Core/2011-06" 
+    xmlns="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" 
+    xmlns:imp0="http://teamcenter.com/Schemas/Soa/2006-03/Base"
+    xmlns:imp1="http://teamcenter.com/Schemas/Soa/2006-03/Exceptions"
+    xmlns:imp2="http://teamcenter.com/Schemas/Core/2011-06/Session"
+    xmlns:imp3="http://teamcenter.com/Schemas/Soa/2011-06/MetaModel"
+    xmlns:imp4="http://teamcenter.com/webservices/2005-06/schemas/WSFaults"
+    xmlns:tns="http://teamcenter.com/Services/Core/2011-06">
+
+
+
+    
+
+    <wsdl:types>
+        <xs:schema>
+            <xs:import namespace="http://teamcenter.com/Schemas/Soa/2006-03/Base" schemaLocation="SoaBase.xsd" />
+            <xs:import namespace="http://teamcenter.com/Schemas/Soa/2006-03/Exceptions" schemaLocation="SoaExceptions.xsd" />
+            <xs:import namespace="http://teamcenter.com/Schemas/Core/2011-06/Session" schemaLocation="Core1106Session.xsd" />
+            <xs:import namespace="http://teamcenter.com/Schemas/Soa/2011-06/MetaModel" schemaLocation="ClientMetaModel.xsd" />
+            <xs:import namespace="http://teamcenter.com/webservices/2005-06/schemas/WSFaults" schemaLocation="WSFaults.xsd" />
+        </xs:schema>
+    </wsdl:types>
+
+
+    <wsdl:message name="InternalServerFaultFault">
+        <wsdl:part name="exx01" element="imp1:InternalServerFault" /> 
+    </wsdl:message>
+    <wsdl:message name="InvalidUserFaultFault">
+        <wsdl:part name="exx02" element="imp1:InvalidUserFault" /> 
+    </wsdl:message>
+    <wsdl:message name="getClientCacheDataRequest">
+        <wsdl:part name="in0" element="imp2:GetClientCacheDataInput" /> 
+    </wsdl:message>
+    <wsdl:message name="getClientCacheDataResponse">
+        <wsdl:part name="out" element="imp2:ClientCacheInfo" /> 
+    </wsdl:message>
+    <wsdl:message name="getTypeDescriptionsRequest">
+        <wsdl:part name="in0" element="imp2:GetTypeDescriptionsInput" /> 
+    </wsdl:message>
+    <wsdl:message name="getTypeDescriptionsResponse">
+        <wsdl:part name="out" element="imp3:TypeSchema" /> 
+    </wsdl:message>
+    <wsdl:message name="InvalidCredentialsFaultFault">
+        <wsdl:part name="exx01" element="imp1:InvalidCredentialsFault" /> 
+    </wsdl:message>
+    <wsdl:message name="loginRequest">
+        <wsdl:part name="in0" element="imp2:LoginInput" /> 
+    </wsdl:message>
+    <wsdl:message name="loginResponse">
+        <wsdl:part name="out" element="imp2:LoginResponse" /> 
+    </wsdl:message>
+    <wsdl:message name="loginSSORequest">
+        <wsdl:part name="in0" element="imp2:LoginSSOInput" /> 
+    </wsdl:message>
+    <wsdl:message name="loginSSOResponse">
+        <wsdl:part name="out" element="imp2:LoginResponse" /> 
+    </wsdl:message>
+    <wsdl:message name="ServiceFaultFault">
+        <wsdl:part name="exx01" element="imp1:ServiceFault" /> 
+    </wsdl:message>
+    <wsdl:message name="updateObjectPropertyPolicyRequest">
+        <wsdl:part name="in0" element="imp2:UpdateObjectPropertyPolicyInput" /> 
+    </wsdl:message>
+    <wsdl:message name="updateObjectPropertyPolicyResponse">
+        <wsdl:part name="out" element="imp2:UpdateObjectPropertyPolicyOutput" /> 
+    </wsdl:message>
+
+
+
+    <wsdl:portType name="Core1106Session">
+
+        <wsdl:operation name="getClientCacheData">
+            <wsdl:documentation><![CDATA[
+        This operation returns information required to maintain a client cache. The Teamcneter server maintains a set of <b>Datasets</b> with static or near static data that is pertainant to a client application.  This static data can be downloaded through FMS to the cleint host one time, and available for each subsequent client session, thus improving the overall performance of the client application. These Datasets are updated as part of the deploy process from the BMIDE. The cleint cache consits of serveral features, each of these features can be used independnatly of each other. The following features are available:<br /><br /><ul><ul><li type="disc">ClientMetaModel :The is the client side version of the server`s Meta Model. This includes type descriptions, property descriptions, List Of Values data, and Dataset tool data. The use of the ClientMetaModel cache replaces the need to use the getTypeDescriptions  service calls. By setting the <font face=&quot;courier&quot; height=&quot;10&quot;>Connection.setOption(OPT_USE_CLIENT_META_MODEL_CACHE, true)</font>, the SOA client framework will use the cache for Client  Meta Model data. The SOA client framework takes care of calling this service opeation and FMS to populate the cache. This feature includes the Dataset:<i>Types, Lov</i>, <i>ToolsData</i>,<i> types_local</i> (one for each locale i.e types_en_US), <i>lov_local</i> (one for each locale i.e lov_en_US).</li><li type="disc">TextData: This contains the localized string available in the Teamcenter server's Text Server. Using the localized data from this cache replaces the need to call the getDisplayStrings service operation.</li></ul></ul><br /><br /><b>Teamcenter Component:</b><br />SOA Framework - The framework to expose the Teamcenter services to the clients.  The framework provices the means to define service interfaces (through BMIDE) and exposes those in Java, C++, C# client bindings. The Session service is part of the framework.
+        ]]></wsdl:documentation>
+            <wsdl:input  message="tns:getClientCacheDataRequest"  name="getClientCacheDataRequest" />
+            <wsdl:output message="tns:getClientCacheDataResponse" name="getClientCacheDataResponse" /> 
+            			<wsdl:fault  message="tns:InternalServerFaultFault"     name="InternalServerFaultError" />			<wsdl:fault  message="tns:InvalidUserFaultFault"     name="InvalidUserFaultError" />
+        </wsdl:operation>
+        <wsdl:operation name="getTypeDescriptions">
+            <wsdl:documentation><![CDATA[
+        Get the Meta data for the named Business Model object types. This includes type and property descriptions and LOV information.<br /><br /><b>Teamcenter Component:</b><br />SOA Framework - The framework to expose the Teamcenter services to the clients.  The framework provices the means to define service interfaces (through BMIDE) and exposes those in Java, C++, C# client bindings. The Session service is part of the framework.
+        ]]></wsdl:documentation>
+            <wsdl:input  message="tns:getTypeDescriptionsRequest"  name="getTypeDescriptionsRequest" />
+            <wsdl:output message="tns:getTypeDescriptionsResponse" name="getTypeDescriptionsResponse" /> 
+            			<wsdl:fault  message="tns:InternalServerFaultFault"     name="InternalServerFaultError" />			<wsdl:fault  message="tns:InvalidUserFaultFault"     name="InvalidUserFaultError" />
+        </wsdl:operation>
+        <wsdl:operation name="login">
+            <wsdl:documentation><![CDATA[
+        Authenticates the user's credentials and initialize a Teamcenter session for this client. The operation will throw an <font face="courier" height="10">InvalidCredentialsException</font> if the <font face="courier" height="10">username</font>, <font face="courier" height="10">password</font> or <font face="courier" height="10">group</font> is not valid.<br />When the client application is deployed to a 4Tier environment (communication through HTTP or TCCS) the login operation also contributes to the assignment of a Teamcenter server instance to the client session. The Teamcenter architecture varies from other client server architectures in that there is a dedicated instance of the Teamcenter server per client application. However, there are use cases where it is desirable for a single user to have multiple desktop applications running and each sharing a single instance of a Teamcenter server. This is controlled through the following elements:<br /><ul><ul><li type="disc">hostPath&nbsp;&nbsp;&nbsp;&nbsp;From the Connection class constructor, this specifies  the address (URI) the Teamcenter server is hosted on.</li><li type="disc">username&nbsp;&nbsp;&nbsp;&nbsp;From this login operation, this specifies the user's Teamcenter user name.</li><li type="disc">sessionDiscriminator&nbsp;&nbsp;&nbsp;&nbsp;From this login operation, this identifies the client session.</li></ul></ul><br /><br />The <font face="courier" height="10">hostPath</font> argument determines the server machine that the client connects to. Once there, the pool manager on that host uses the <font face="courier" height="10">username</font> and <font face="courier" height="10">sessionDiscriminator</font> arguments of the login request to determine which Teamcenter server instance to assign the client to. If the pool manager has an existing Teamcenter server instance with the <font face="courier" height="10">username</font>/<font face="courier" height="10">sessionDiscriminator</font> key, the client is assigned to that existing instance of the Teamcenter server, and therefore sharing the server with another client; otherwise, a new instance of the Teamcenter server is used. There are a few general scenarios for the <font face="courier" height="10">sessionDiscriminator</font> argument:<br /><br /><ul><ul><li type="disc">Blank &nbsp;&nbsp;&nbsp;&nbsp;If the user <i>jdoe</i> logs on to Teamcenter using two or more client applications using a blank <font face="courier" height="10">sessionDiscriminator</font> argument (for example, <i>jdoe</i>/ ), all of those clients are assigned to the same Teamcenter server instance. These client applications can be running on the same or different client hosts.</li><li type="disc">Constant &nbsp;&nbsp;&nbsp;&nbsp;If the user <i>jdoe</i> logs on to Teamcenter using two or more client applications using a constant or fixed <font face="courier" height="10">sessionDiscriminator</font> argument (for example, <i>jdoe</i>/<i>MyApp</i> ), those clients are assigned to the same Teamcenter server instance. This is similar to the blank <font face="courier" height="10">sessionDiscriminator</font> argument; the difference is that only multiple instances of the client application using <i>myApp</i> started by <i>jdoe</i> share the same Teamcenter server instance.</li><li type="disc">Unique &nbsp;&nbsp;&nbsp;&nbsp;If the user <i>jdoe</i> logs on using a unique random-generated string (for example<i>, jdoe</i>/<i>akdk938lakc</i>), the client application will be assigned to a dedicated instance of the Teamcenter server.</li></ul></ul><br /> <br />The scenario you use depends on how your client application is used in the integrated environment. The most common case is the unique <font face="courier" height="10">sessionDiscriminator</font> value.<br /><br /><b>Teamcenter Component:</b><br />SOA Framework - The framework to expose the Teamcenter services to the clients.  The framework provices the means to define service interfaces (through BMIDE) and exposes those in Java, C++, C# client bindings. The Session service is part of the framework.
+        ]]></wsdl:documentation>
+            <wsdl:input  message="tns:loginRequest"  name="loginRequest" />
+            <wsdl:output message="tns:loginResponse" name="loginResponse" /> 
+            			<wsdl:fault  message="tns:InternalServerFaultFault"     name="InternalServerFaultError" />			<wsdl:fault  message="tns:InvalidCredentialsFaultFault"     name="InvalidCredentialsFaultError" />
+        </wsdl:operation>
+        <wsdl:operation name="loginSSO">
+            <wsdl:documentation><![CDATA[
+        Authenticates the user using Single-Sign-On (SSO) credentials and initialize a Teamcenter session for this client. The <font face="courier" height="10">username</font> and <font face="courier" height="10">password</font> arguments must be obtained from Teamcenter's Security Services. The <font face="courier" height="10">SsoCredentials</font> class offers a simple API to get these values. The operation will throw an <font face="courier" height="10">InvalidCredentialsException</font> if the <font face="courier" height="10">user</font>, <font face="courier" height="10">password</font> or <font face="courier" height="10">group</font> is not valid.<br />When the client application is deployed to a 4Tier environment (communication through HTTP or TCCS) the login operation also contributes to the assignment of a Teamcenter server instance to the client session. The Teamcenter architecture varies from other client server architectures in that there is a dedicated instance of the Teamcenter server per client application. However, there are use cases where it is desirable for a single user to have multiple desktop applications running and each sharing a single instance of a Teamcenter server. This is controlled through the following elements:<br /><ul><ul><li type="disc"><font face="courier" height="10">hostPath</font>&nbsp;&nbsp;&nbsp;&nbsp;From the Connection class constructor, this specifies  the address (URI) the Teamcenter server is hosted on.</li><li type="disc"><font face="courier" height="10">username</font>&nbsp;&nbsp;&nbsp;&nbsp;From this login operation, this specifies the user's Teamcenter user name.</li><li type="disc"><font face="courier" height="10">sessionDiscriminator</font>&nbsp;&nbsp;&nbsp;&nbsp;From this login operation, this identifies the client session.</li></ul></ul><br /><br />The <font face="courier" height="10">hostPath</font> argument determines the server machine that the client connects to. Once there, the pool manager on that host uses the <font face="courier" height="10">username</font> and <font face="courier" height="10">sessionDiscriminator</font> arguments of the logon request to determine which Teamcenter server instance to assign the client to. If the pool manager has an existing Teamcenter server instance with the <font face="courier" height="10">username</font>/<font face="courier" height="10">sessionDiscriminator</font> key, the client is assigned to that existing instance of the Teamcenter server, and therefore sharing the server with another client; otherwise, a new instance of the Teamcenter server is used. There are a few general scenarios for the sessionDiscriminator argument:<br /><br /><ul><ul><li type="disc">Blank &nbsp;&nbsp;&nbsp;&nbsp;If the user jdoe logs on to Teamcenter using two or more client applications using a blank <font face="courier" height="10">sessionDiscriminator</font> argument (for example, <i>jdoe</i>/ ), all of those clients are assigned to the same Teamcenter server instance. These client applications can be running on the same or different client hosts.</li><li type="disc">Constant &nbsp;&nbsp;&nbsp;&nbsp;If the user jdoe logs on to Teamcenter using two or more client applications using a constant or fixed <font face="courier" height="10">sessionDiscriminator</font> argument (for example, <i>jdoe/MyApp</i> ), those clients are assigned to the same Teamcenter server instance. This is similar to the blank <font face="courier" height="10">sessionDiscriminator</font> argument; the difference is that only multiple instances of the client application using myApp started by jdoe share the same Teamcenter server instance.</li><li type="disc">Unique &nbsp;&nbsp;&nbsp;&nbsp;If the user jdoe logs on using a unique random-generated string (for example, <i>jdoe</i>/<i>akdk938lakc</i>), the client application will be assigned to a dedicated instance of the Teamcenter server.</li></ul></ul><br /> <br />The scenario you use depends on how your client application is used in the integrated environment. The most common case is the unique <font face="courier" height="10">sessionDiscriminator</font> value.<br /><br /><b>Teamcenter Component:</b><br />SOA Framework - The framework to expose the Teamcenter services to the clients.  The framework provices the means to define service interfaces (through BMIDE) and exposes those in Java, C++, C# client bindings. The Session service is part of the framework.
+        ]]></wsdl:documentation>
+            <wsdl:input  message="tns:loginSSORequest"  name="loginSSORequest" />
+            <wsdl:output message="tns:loginSSOResponse" name="loginSSOResponse" /> 
+            			<wsdl:fault  message="tns:InternalServerFaultFault"     name="InternalServerFaultError" />			<wsdl:fault  message="tns:InvalidCredentialsFaultFault"     name="InvalidCredentialsFaultError" />
+        </wsdl:operation>
+        <wsdl:operation name="updateObjectPropertyPolicy">
+            <wsdl:documentation><![CDATA[
+        Update the named policy, adding and removing the named properties. This operation only applies to object property policies that have been defined on the client side.<br /><br /><b>Dependencies:</b><br />setObjectPropertyPolicy<br /><br /><b>Teamcenter Component:</b><br />SOA Framework - The framework to expose the Teamcenter services to the clients.  The framework provices the means to define service interfaces (through BMIDE) and exposes those in Java, C++, C# client bindings. The Session service is part of the framework.
+        ]]></wsdl:documentation>
+            <wsdl:input  message="tns:updateObjectPropertyPolicyRequest"  name="updateObjectPropertyPolicyRequest" />
+            <wsdl:output message="tns:updateObjectPropertyPolicyResponse" name="updateObjectPropertyPolicyResponse" /> 
+            			<wsdl:fault  message="tns:InternalServerFaultFault"     name="InternalServerFaultError" />			<wsdl:fault  message="tns:ServiceFaultFault"     name="ServiceFaultError" />			<wsdl:fault  message="tns:InvalidUserFaultFault"     name="InvalidUserFaultError" />
+        </wsdl:operation>
+
+    </wsdl:portType>
+
+
+    <wsdl:binding name="Core1106SessionSoapBinding" type="tns:Core1106Session">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+
+        <wsdl:operation name="getClientCacheData">
+            <soap:operation style="document" soapAction="getClientCacheData" /> 
+            <wsdl:input><soap:body  use="literal" /></wsdl:input>
+            <wsdl:output><soap:body use="literal" /></wsdl:output>
+             
+		<wsdl:fault name="InternalServerFaultError"><soap:fault name="InternalServerFaultError" use="literal" /></wsdl:fault>
+		<wsdl:fault name="InvalidUserFaultError"><soap:fault name="InvalidUserFaultError" use="literal" /></wsdl:fault>
+       </wsdl:operation>
+        <wsdl:operation name="getTypeDescriptions">
+            <soap:operation style="document" soapAction="getTypeDescriptions" /> 
+            <wsdl:input><soap:body  use="literal" /></wsdl:input>
+            <wsdl:output><soap:body use="literal" /></wsdl:output>
+             
+		<wsdl:fault name="InternalServerFaultError"><soap:fault name="InternalServerFaultError" use="literal" /></wsdl:fault>
+		<wsdl:fault name="InvalidUserFaultError"><soap:fault name="InvalidUserFaultError" use="literal" /></wsdl:fault>
+       </wsdl:operation>
+        <wsdl:operation name="login">
+            <soap:operation style="document" soapAction="login" /> 
+            <wsdl:input><soap:body  use="literal" /></wsdl:input>
+            <wsdl:output><soap:body use="literal" /></wsdl:output>
+             
+		<wsdl:fault name="InternalServerFaultError"><soap:fault name="InternalServerFaultError" use="literal" /></wsdl:fault>
+		<wsdl:fault name="InvalidCredentialsFaultError"><soap:fault name="InvalidCredentialsFaultError" use="literal" /></wsdl:fault>
+       </wsdl:operation>
+        <wsdl:operation name="loginSSO">
+            <soap:operation style="document" soapAction="loginSSO" /> 
+            <wsdl:input><soap:body  use="literal" /></wsdl:input>
+            <wsdl:output><soap:body use="literal" /></wsdl:output>
+             
+		<wsdl:fault name="InternalServerFaultError"><soap:fault name="InternalServerFaultError" use="literal" /></wsdl:fault>
+		<wsdl:fault name="InvalidCredentialsFaultError"><soap:fault name="InvalidCredentialsFaultError" use="literal" /></wsdl:fault>
+       </wsdl:operation>
+        <wsdl:operation name="updateObjectPropertyPolicy">
+            <soap:operation style="document" soapAction="updateObjectPropertyPolicy" /> 
+            <wsdl:input><soap:body  use="literal" /></wsdl:input>
+            <wsdl:output><soap:body use="literal" /></wsdl:output>
+             
+		<wsdl:fault name="InternalServerFaultError"><soap:fault name="InternalServerFaultError" use="literal" /></wsdl:fault>
+		<wsdl:fault name="ServiceFaultError"><soap:fault name="ServiceFaultError" use="literal" /></wsdl:fault>
+		<wsdl:fault name="InvalidUserFaultError"><soap:fault name="InvalidUserFaultError" use="literal" /></wsdl:fault>
+       </wsdl:operation>
+
+    </wsdl:binding>
+
+    <wsdl:service name="Core1106SessionService">
+       <wsdl:port binding="tns:Core1106SessionSoapBinding" name="Core-2011-06-Session">       
+           <soap:address 
+              location="http://localhost:80/PTierApp/WebServices/Core-2011-06-Session" /> 
+       </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

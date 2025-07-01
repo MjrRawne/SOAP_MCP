@@ -1,0 +1,60 @@
+{
+  "name": "teamcenter",
+  "base_url": "http://vm-metadev.dev.mayahtt.ca:80/tc",
+  "description": "Teamcenter API for engineering data. ASP.NET Session based Authentication",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "endpoints": [
+    {
+      "name": "login",
+      "description": "Authenticates user with Teamcenter.",
+      "method": "POST",
+      "path": "/JsonRestServices/Core-2011-06-Session/login",
+	  "workflow": {
+		"prerequisites": [],
+		"enables": ["all_other_endpoints"],
+		"cleanup": ["logout"]
+	  },
+	  "notes": [
+		"Must be called before any other API operations",
+		"Session expires after 30 minutes of inactivity"
+	  ],
+      "params": [
+        {
+          "name": "credentials",
+          "type": "object",
+          "location": "body",
+          "required": true,
+          "description": "Teamcenter credentials object. PASSWORD MUST ALWAYS BE EXPLICITLY REQUESTED FROM USER - NEVER USE DEFAULT OR USERNAME AS PASSWORD",
+          "default": { "user": "maya", "password": null, "group": "", "role": "", "descriminator": "APIWEAVER", "locale": "" }
+		  "schema": {
+		    "user": {"type": "string", "required": true, "description": "Username for authentication"},
+		    "password": {"type": "string", "required": true, "description": "Password for authentication. MUST ALWAYS be explicitly requested from user in conversation - never use defaults or username"},
+		    "group": {"type": "string", "required": false, "description": "User group (optional)"},
+		    "role": {"type": "string", "required": false, "description": "User role (optional)"},
+		    "descriminator": {"type": "string", "required": true, "description": "Client identifier"}
+		    "locale": {"type": "string", "required": false, "description": "Locale (optional)"}
+		  }		  
+        }
+      ]
+    },
+    {
+      "name": "logout",
+      "description": "Terminates the current Teamcenter session and invalidates the session ID. Uses the active session ID automatically. Call this when done to properly clean up the session.",
+      "method": "POST",
+      "path": "/JsonRestServices/Core-2006-03-Session/logout",
+	  "workflow": {
+		"prerequisites": ["login"],
+		"cleanup": true,
+		"idempotent": true
+	  },
+	  "notes": [
+		"Safe to call multiple times",
+		"Should be called at end of session",
+		"May return success even if session was already expired"
+	  ],
+      "params": []
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "name": "teamcenter",
+  "base_url": "http://vm-metadev.dev.mayahtt.ca:80/tc",
+  "description": "Teamcenter API for engineering data. ASP.NET Session based Authentication",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "authentication_info": {
+    "note": "This API uses ASP.NET Session authentication but requires manual session management",
+    "workflow": "1. Call login to get session ID from Set-Cookie header, 2. Extract ASP.NET_SessionId value, 3. Pass as parameter to other endpoints"
+  },
+  "endpoints": [
+    {
+      "name": "login",
+      "description": "Authenticates user with Teamcenter. IMPORTANT: You must manually extract the ASP.NET_SessionId value from the 'Set-Cookie' response header and save it to use as session_id parameter in subsequent API calls like logout.",
+      "method": "POST",
+      "path": "/JsonRestServices/Core-2011-06-Session/login",
+      "params": [
+        {
+          "name": "credentials",
+          "type": "object",
+          "location": "body",
+          "required": true,
+          "description": "Teamcenter credentials, dictionary containing user, password, group, role, descrimator and locale key-values",
+          "default": { "user": "maya", "password": "maya", "group": "", "role": "", "descriminator": "APIWEAVER", "locale": "" }
+        }
+      ]
+    },
+    {
+      "name": "logout",
+      "description": "Terminates the current Teamcenter session and invalidates the session ID. Uses the active session ID automatically. Call this when done to properly clean up the session.",
+      "method": "POST",
+      "path": "/JsonRestServices/Core-2006-03-Session/logout",
+	  "headers": {
+		"Cookie": "ASP.NET_SessionId={session_id}"
+	  },
+      "params": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "location": "headers",
+          "required": true,
+          "description": "The ASP.NET_SessionId value manually extracted from the login response's Set-Cookie header (pattern: ASP.NET_SessionId=([^;]+))",
+        }
+	  ]
+    }
+  ]
+}

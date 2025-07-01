@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="http://teamcenter.com/Schemas/Core/2011-06/Session"
+    xmlns:tns="http://teamcenter.com/Schemas/Core/2011-06/Session" 
+    xmlns:soa="http://teamcenter.com/Schemas/Soa/2006-03/Base"
+     
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+    
+    <xsd:import namespace="http://teamcenter.com/Schemas/Soa/2006-03/Base"           schemaLocation="SoaBase.xsd" />
+    
+    
+
+    <xsd:complexType name="ServerInfo"> 
+        <xsd:annotation>
+                <xsd:appinfo>
+                     <xjb4c-hashmap>
+                          <key>key</key>
+                          <value>value</value>
+                     </xjb4c-hashmap>
+                </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+        </xsd:sequence>
+        <xsd:attribute name="key" type="xsd:string" use="required">
+       </xsd:attribute>
+        <xsd:attribute name="value" type="xsd:string" use="required">
+       </xsd:attribute>
+    </xsd:complexType> 
+
+
+
+    <xsd:complexType name="Credentials">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                The credentials needed to authenticate a user.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+        </xsd:sequence>
+        <xsd:attribute name="user" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The user's Teamcenter user name.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="password" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The user's Teamcenter password or SSO token.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="group" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The group ID for this session. If blank (""), the user's default group is assumed.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="role" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The role the user is performing in the group. If blank (""), the user's default role in the group is assumed.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="locale" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The locale to be used by the Teamcenter server process for this session. If blank (""), the server's default locale will be used.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="descrimator" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    Client defined identifier for this session. This argument is ignored when the client application is deployed in a 2Tier environment (IIOP communication).
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+    </xsd:complexType>
+
+
+    <xsd:element name="LoginResponse">
+    <xsd:complexType>
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                Basic information about the server and  partial errors are returned when the authentication is successful but requested <font face="courier" height="10">role</font> or <font face="courier" height="10">locale</font> is not supported.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="serverInfo" type="tns:ServerInfo"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:appinfo>
+                        <xjb4c-type>hashmap</xjb4c-type>
+                    </xsd:appinfo>
+                    <xsd:documentation><![CDATA[
+                        Name/Value pairs (string/string) of data related to the server. The following keys are valid:<br /><ul><ul><li type="disc"><i>Version</i>         The version of the Teamcenter server.</li><li type="disc"><i>HostName</i>     The name of the Teamcenter server's host machine.</li><li type="disc"><i>LogFile</i>         The full path of the Teamcenter server's log file.</li><li type="disc"><i>Locale</i>          The locale of this session.</li><li type="disc"><i>TcServerID</i>    The unique ID of this instance of the Teamcenter server.</li></ul></ul>
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="soa:PartialErrors" >
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        Partial errors or warnings resulting from the login attempt.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    </xsd:element>
+
+
+    <xsd:element name="LoginInput">
+    <xsd:complexType>
+        <xsd:sequence>
+            <xsd:element name="credentials" type="tns:Credentials" >
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        The user's Teamcenter credentials
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    </xsd:element>
+    <!--  LoginResponse is used as the login output element -->
+
+</xsd:schema>
