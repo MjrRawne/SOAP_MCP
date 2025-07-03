@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<wsdl:definitions 
+    targetNamespace="http://teamcenter.com/Services/Core/2008-06" 
+    xmlns="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" 
+    xmlns:imp0="http://teamcenter.com/Schemas/Soa/2006-03/Base"
+    xmlns:imp1="http://teamcenter.com/Schemas/Soa/2006-03/Exceptions"
+    xmlns:imp2="http://teamcenter.com/Schemas/Core/2008-06/DataManagement"
+    xmlns:imp3="http://teamcenter.com/Schemas/Core/2006-03/DataManagement"
+    xmlns:imp4="http://teamcenter.com/webservices/2005-06/schemas/WSFaults"
+    xmlns:tns="http://teamcenter.com/Services/Core/2008-06">
+
+
+
+    
+
+    <wsdl:types>
+        <xs:schema>
+            <xs:import namespace="http://teamcenter.com/Schemas/Soa/2006-03/Base" schemaLocation="SoaBase.xsd" />
+            <xs:import namespace="http://teamcenter.com/Schemas/Soa/2006-03/Exceptions" schemaLocation="SoaExceptions.xsd" />
+            <xs:import namespace="http://teamcenter.com/Schemas/Core/2008-06/DataManagement" schemaLocation="Core0806DataManagement.xsd" />
+            <xs:import namespace="http://teamcenter.com/Schemas/Core/2006-03/DataManagement" schemaLocation="Core0603DataManagement.xsd" />
+            <xs:import namespace="http://teamcenter.com/webservices/2005-06/schemas/WSFaults" schemaLocation="WSFaults.xsd" />
+        </xs:schema>
+    </wsdl:types>
+
+
+    <wsdl:message name="InternalServerFaultFault">
+        <wsdl:part name="exx01" element="imp1:InternalServerFault" /> 
+    </wsdl:message>
+    <wsdl:message name="InvalidUserFaultFault">
+        <wsdl:part name="exx03" element="imp1:InvalidUserFault" /> 
+    </wsdl:message>
+    <wsdl:message name="getItemAndRelatedObjectsRequest">
+        <wsdl:part name="in0" element="imp2:GetItemAndRelatedObjectsInput" /> 
+    </wsdl:message>
+    <wsdl:message name="getItemAndRelatedObjectsResponse">
+        <wsdl:part name="out" element="imp2:GetItemAndRelatedObjectsResponse" /> 
+    </wsdl:message>
+    <wsdl:portType name="Core0806DataManagement">
+
+        <wsdl:operation name="getItemAndRelatedObjects">
+            <wsdl:documentation><![CDATA[
+        This operation returns <b>Items</b>, <b>ItemRevisions</b>, <b>Dataset</b> and <b>NamedReference</b> information based on the input. Input is a list of <font face="courier" height="10">GetItemAndRelatedObjectsInfo</font> structures each of which contains item uid or id, revison information and optionally a list of filters to determine the datasets to be returned. For the <b>Datasets</b> the client can request information about the <b>NamedReferences</b>. <b>NamedReferences</b> are how <b>Data</b> files are attached to <b>Datasets</b>. The Data file is what a CAD client is really interested in. The return is a <font face="courier" height="10">GetItemAndRelatedObjectsResponse</font> which contains a list of <font face="courier" height="10">GetItemAndRelatedObjectsItemOutput</font> and a <font face="courier" height="10">ServiceData</font>.<br /><br /><b>Use Cases:</b><br />The client has an item of <b>ItemRevision</b> and needs to know what CAD data is attached to the <b>ItemRevision</b>. The client fills in either the <b>Item</b> or <b>ItemRevision</b> information along with the information about the types of <b>Dataset</b> and <b>NamedReferences</b> the client is interested in. For the <b>NamedReferences</b> the user can get the tickets which will allow the client retrieve the files attached to the <b>Datasets</b>. The results of the query will give the client all the information about the <b>Datasets</b> and <b>NamedReferences</b> and optional tickets.<br /><br /><b>Teamcenter Component:</b><br />Core Model Item - A set of capabilities/functionality (data model and behaviours) that form the very core of Teamcenter PLM platform. This component defines the Item Class and behavior.
+        ]]></wsdl:documentation>
+            <wsdl:input  message="tns:getItemAndRelatedObjectsRequest"  name="getItemAndRelatedObjectsRequest" />
+            <wsdl:output message="tns:getItemAndRelatedObjectsResponse" name="getItemAndRelatedObjectsResponse" /> 
+            			<wsdl:fault  message="tns:InternalServerFaultFault"     name="InternalServerFaultError" />			<wsdl:fault  message="tns:InvalidUserFaultFault"     name="InvalidUserFaultError" />
+        </wsdl:operation>
+    </wsdl:portType>
+
+
+    <wsdl:binding name="Core0806DataManagementSoapBinding" type="tns:Core0806DataManagement">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+
+        <wsdl:operation name="getItemAndRelatedObjects">
+            <soap:operation style="document" soapAction="getItemAndRelatedObjects" /> 
+            <wsdl:input><soap:body  use="literal" /></wsdl:input>
+            <wsdl:output><soap:body use="literal" /></wsdl:output>
+             
+		<wsdl:fault name="InternalServerFaultError"><soap:fault name="InternalServerFaultError" use="literal" /></wsdl:fault>
+		<wsdl:fault name="InvalidUserFaultError"><soap:fault name="InvalidUserFaultError" use="literal" /></wsdl:fault>
+       </wsdl:operation>
+
+    </wsdl:binding>
+
+    <wsdl:service name="Core0806DataManagementService">
+       <wsdl:port binding="tns:Core0806DataManagementSoapBinding" name="Core-2008-06-DataManagement">       
+           <soap:address 
+              location="http://localhost:80/PTierApp/WebServices/Core-2008-06-DataManagement" /> 
+       </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

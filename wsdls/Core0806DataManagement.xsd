@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!-- 
+ @<COPYRIGHT>@
+ ==================================================
+ Copyright 2012
+ Siemens Product Lifecycle Management Software Inc.
+ All Rights Reserved.
+ ==================================================
+ @<COPYRIGHT>@
+
+ ==================================================
+
+   Auto-generated source from service interface.
+                 DO NOT EDIT
+
+ ==================================================
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="http://teamcenter.com/Schemas/Core/2008-06/DataManagement"
+    xmlns:tns="http://teamcenter.com/Schemas/Core/2008-06/DataManagement" 
+    xmlns:soa="http://teamcenter.com/Schemas/Soa/2006-03/Base"
+    xmlns:imp0="http://teamcenter.com/Schemas/Core/2006-03/DataManagement"
+ 
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+    
+    <xsd:import namespace="http://teamcenter.com/Schemas/Soa/2006-03/Base"           schemaLocation="SoaBase.xsd" />
+    <xsd:import namespace="http://teamcenter.com/Schemas/Core/2006-03/DataManagement"           schemaLocation="Core0603DataManagement.xsd" />
+    
+    <xsd:simpleType name="Processing">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="None" />
+            <xsd:enumeration value="All" />
+            <xsd:enumeration value="Min" />
+            <xsd:enumeration value="Ids" />
+            <xsd:enumeration value="Rule" />
+            <xsd:enumeration value="Nrev" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="AttrInfo">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                This structure contains information for specifying name value pairs.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The name of the attribute.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="value" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The value of the attribute.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="DatasetFilter">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                The structure contains information for determining which datasets to return.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="nrFilters" type="tns:NamedReferenceFilter"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        Filter to select datasets with a particular named reference to a specific uid. If empty then not used in filtering.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="relationFilters" type="tns:DatasetRelationFilter"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        The relation filters to use.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="useNameFirst" type="xsd:boolean" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    Filter with the <font face="courier" height="10">datasetName</font> first.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="processing" type="tns:Processing" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    Specifies which version or versions of the <b>Dataset</b> are returned.<br /> Legal values are: <br /><ul><ul><li type="disc">All - All versions of the dataset are returned.</li><li type="disc">Min - The version 0 of the dataset is returned.</li><li type="disc">None - No dataset is returned.</li></ul></ul>
+                ]]></xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="name" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The name of the <b>Dataset</b> objects to return. If empty then not used in filtering.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="DatasetInfo">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                Input structure that the information for determining which datasets to return. If the <font face=&quot;courier&quot; height=&quot;10&quot;>datasetUid</font> is specified, then only that dataset will be returned. If the dataset does not exist then a null dataset is returned. If the <font face=&quot;courier&quot; height=&quot;10&quot;>datasetUid</font> is not specified then the dataset filter determines the datasets to return. For each dataset to be returned, the <font face=&quot;courier&quot; height=&quot;10&quot;>NamedRef</font> will determine the named reference information to return. For each named reference returned that is a reference to a file, an FMS read ticket will be returned if <font face=&quot;courier&quot; height=&quot;10&quot;>ticket</font> is set.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="filter" type="tns:DatasetFilter" >
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        If a UID is not specified, determines the <b>Dataset</b> objects to return.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="namedRefs" type="tns:NamedReferenceList"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        Information about named references to return for each <b>Dataset</b>.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="clientId" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    A unique string used to identify return data elements and partial errors associated with this input structure.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="uid" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The uid of the only <b>Dataset</b> to return.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="DatasetRelationFilter">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                This structure contains information for determining which datasets to consider to return. The relation type and <b>Dataset</b> type will be used to produce a set of datasets.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+        </xsd:sequence>
+        <xsd:attribute name="relationTypeName" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The relation type name specifies the relation that relates the <b>ItemRevision</b> to the <b>Dataset</b>. If not specified then all.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="datasetTypeName" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The type name of<b> Dataset</b> to return. If empty then all.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+    </xsd:complexType>
+
+
+
+    <xsd:complexType name="ItemInfo">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                This structure contains either an item id or uid. Has a flag that indicates if the id is to be used first. If set then the id will be used. If the id does not resolve to an item then the uid will be used. If the flag is not set then the uid will be used first. If the uid does not resolve to an item then the id will be used. If no matching item is found then a null entry is placed in the output list and an error is returned.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="ids" type="tns:AttrInfo"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        List of attributes and values for selecting the item. For pre TC8.1 versions only one entry is supported. This entry has the name <font face="courier" height="10">item</font>_id.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="clientId" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    Client Identifier generated by client to identify output
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="useIdFirst" type="xsd:boolean" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    A flag to indicate if the id is to be used before the uid.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="uid" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    <b>Item</b> uid string for <b>Item</b> to retrieve.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="RevInfo">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                This structure contains information to determine the revisions to return.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+        </xsd:sequence>
+        <xsd:attribute name="clientId" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    Client Identifier generated by client to identify output.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="processing" type="tns:Processing" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    Specifies what data to use to determine the revisions to return.<br />The legal values are: <br /><ul><ul><li type="disc">All - All the revisions of the input <b>Item</b> are returned</li><li type="disc">None - No revisions are returned.</li><li type="disc">Nrev - Number of revisions based on the <font face="courier" height="10">RevInfo::nRevs</font> input.</li><li type="disc">Min - The latest revision.</li><li type="disc">Rule - The revision as configured by the <font face="courier" height="10">RevInfo::revisionRule</font> input.</li><li type="disc">Ids - The revision based on the <font face="courier" height="10">RevInfo::Id</font> input.</li></ul></ul>
+                ]]></xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="useIdFirst" type="xsd:boolean" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    A flag to indicate if the id is to be used before the uid.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="uid" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    Revision uid for revision to retrieve.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="id" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    Revision id for revision to retrieve.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="nRevs" type="xsd:integer" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The number of revisions to retrieve, or the number of existing revisions, whichever is smaller. The revisions returned will be the latest ones. The first one returned is the oldest of the group. The last the latest.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="revisionRule" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The revision rule to be used.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="GetItemAndRelatedObjectsInfo">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                Input structure for <font face="courier" height="10">GetItemAndRelatedObjects</font>. Must have a <font face="courier" height="10">clientId</font>, must contain an <font face="courier" height="10">itemInfo</font> that is valid, may contain a list of information about revisions to return. If any bvr names are given then the tags for the BVRs will be returned. <br />If <font face="courier" height="10">itemInfo</font> and <font face="courier" height="10">revInfo</font> are not provided, then the input structure for <font face="courier" height="10">GetItemAndRelatedObjects</font> expects the value &quot;ProcessingNone&quot; for both datasetInfo.filter.processing and revInfo.filter.processing.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="itemInfo" type="tns:ItemInfo" >
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        <b>Item</b> specifications, the itemInfo input is valid when one of the following is true:<br /> - has the uid field set to the UID of an existing <b>Item</b>,<br /> - has the ids filed set to key attribute values which identify a single existing <b>Item</b>,<br /> - it may be blank if the RevInfo uid field is set to the UID of an existing <b>ItemRevision</b>.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="revInfo" type="tns:RevInfo" >
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        Revision specifications
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="datasetInfo" type="tns:DatasetInfo" >
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        Filter used to select datasets to return.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="bvrTypeNames" type="xsd:string"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        A list of a BVRs to return. optional.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="clientId" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    Client Identifier generated by client to identify output
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="GetItemAndRelatedObjectsItemOutput">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                This structure contains item information.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="item" type="soa:ModelObject" >
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        <b>Item</b> object.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="itemRevOutput" type="tns:RevisionOutput"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        List of <font face="courier" height="10">RevisionOutputs</font>. When multiple are returned, the order will be oldest first to latest last.
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="clientId" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    Identifier of input data used to generate output.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+    </xsd:complexType>
+
+
+    <xsd:element name="GetItemAndRelatedObjectsResponse">
+    <xsd:complexType>
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                Return structure for <font face=&quot;courier&quot; height=&quot;10&quot;>GetItemAndRelatedObjects</font> operation
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="output" type="tns:GetItemAndRelatedObjectsItemOutput"  minOccurs="0" maxOccurs="unbounded">
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        List of <font face=&quot;courier&quot; height=&quot;10&quot;>GetItemAndRelatedObjectsItemOutput</font>
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="soa:ServiceData" >
+               <xsd:annotation>
+                    <xsd:documentation><![CDATA[
+                        Standard ServiceData member
+                    ]]></xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    </xsd:element>
+
+
+    <xsd:complexType name="NamedReferenceFilter">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                This structure contains information for determining which datasets to consider to return. This specifies a list of named references and the UID referenced by the named reference.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+        </xsd:sequence>
+        <xsd:attribute name="namedReference" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The name of the named reference.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="uidReferenced" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    The unique identifier referenced.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="NamedReferenceList">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+                This structure contains information determining which named reference information to return. This specifies a named reference to return and a flag to specify, if the named reference is to a file, to return an FMS read ticket.
+            ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+        </xsd:sequence>
+        <xsd:attribute name="namedReference" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    Named Reference to return.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+        <xsd:attribute name="ticket" type="xsd:boolean" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+                    If this Named Reference is to a file, include an FMS read ticket if set.
+                ]]></xsd:documentation>
+            </xsd:annotation>
+       </xsd:attribute>
+    </xsd:complexType>
+
+
+</xsd:schema>
